@@ -28,7 +28,9 @@
   ord = [1:n];  op = path(ord,cities);
 
   for jstep=1:ceil(maxsteps);
-% lower temperature by 0.1 percent 
+% lowif (jstep >= (ceil(maxsteps) - 50))
+      l_sum    = l_sum + op;
+      l_sum_sq = l_sum_sq + op^2;er temperature by 0.1 percent 
     % temp = temp*0.999;
     for ins = 1:100 
       j = ceil(rand*n); len = ceil(rand*(n/2));
@@ -44,7 +46,7 @@
       end
     end
     
-    if (jstep >= (ceil(maxsteps) - 50))
+    if (jstep > (ceil(maxsteps) - 50))
       l_sum    = l_sum + op;
       l_sum_sq = l_sum_sq + op^2;
     end
@@ -90,3 +92,13 @@
   end
   ylabel(['l'],'fontsize',16);
 
+  mean_l_vec = [21.0012 15.3226 10.0266 6.9226 6.2226 6.0793];
+  temp_vec = [0.5 0.2 0.1 0.05 0.02 0.01];
+  var_vec = [1.8269, 2.8591, 0.3501, 0.1167, 0.0010, 0.0010];
+  xy = plot(temp_vec, mean_l_vec, 'ko-');
+  errorbar(temp_vec,mean_l_vec,var_vec);
+  set(gca, 'XDir', 'reverse');
+  title('Mean Path Length vs Temperature');
+  xlabel('T');
+  ylabel('<l>');
+  
