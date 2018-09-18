@@ -92,4 +92,4 @@ hist_D(2).Color = [0 1 1];
 title('Histogram for Two Sets of Hamming Distances');
 xlabel('Hamming Distance / 30');
 ylabel('Number of Occurences');
-legend({'Hamming distance for the same person','Hamming distance for different people'},'Location','northeast');
+legend({'Hamming distance for the same person','Normal distribution fitted to the same person category', 'Hamming distance for different people', 'Normal distribution fitted to the different person category'},'Location','northeast');
