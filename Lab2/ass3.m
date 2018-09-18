@@ -25,6 +25,7 @@ for i = 1:number_of_samples
     
     hamming_distance = hamming_distance/30;
     hamming_data_same_person(i) = hamming_distance;
+
 end
 
 % Compute set D
@@ -49,7 +50,6 @@ for i = 1:number_of_samples
     
     load(strcat('person', int_string_1, '.mat'));
     iris_data_1 = iriscode;
-    
     load(strcat('person', int_string_2, '.mat'));
     iris_data_2 = iriscode;
     
@@ -59,10 +59,37 @@ for i = 1:number_of_samples
     hamming_distance = 0;
     for j = 1:feature_vector_length
         if random_row_1(j) ~= random_row_2(j)
+
             hamming_distance = hamming_distance+1;
         end
     end
-    
+
     hamming_distance = hamming_distance/30;
     hamming_data_different_people(i) = hamming_distance;
 end
+
+S = hamming_data_same_person;
+D = hamming_data_different_people;
+S_t = transpose(S);
+D_t = transpose(D);
+SD = horzcat(S_t,D_t);
+S_mean = mean(S);
+S_variance = var(S);
+D_mean = mean(S);
+D_variance = var(S);
+
+hist_S = histfit(S);
+hold on
+hist_D = histfit(D);
+
+hist_S(1).FaceColor = [.2 .2 .2];
+hist_S(2).Color = [.2 .2 .2];
+
+
+hist_D(1).FaceColor = [0 1 1];
+hist_D(2).Color = [0 1 1];
+
+title('Histogram for Two Sets of Hamming Distances');
+xlabel('Hamming Distance / 30');
+ylabel('Number of Occurences');
+legend({'Hamming distance for the same person','Hamming distance for different people'},'Location','northeast');
