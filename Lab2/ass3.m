@@ -75,8 +75,8 @@ D_t = transpose(D);
 SD = horzcat(S_t,D_t);
 S_mean = mean(S);
 S_variance = var(S);
-D_mean = mean(S);
-D_variance = var(S);
+D_mean = mean(D);
+D_variance = var(D);
 
 hist_S = histfit(S);
 hold on
