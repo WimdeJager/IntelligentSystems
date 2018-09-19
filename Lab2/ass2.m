@@ -10,3 +10,6 @@ y = [150 200];
 scatter(hair_length, body_height);
 hold on
 line(x,y);
+title('Body Height vs Hair Length');
+xlabel('Hair Length (cm)');
+ylabel('Body Height (cm)');
