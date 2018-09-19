@@ -1,4 +1,4 @@
-% Compute set S
+% Compute set S (feature vectors compared from the same person)
 feature_vector_length = 30;
 number_of_samples = 1000;
 
@@ -28,7 +28,7 @@ for i = 1:number_of_samples
 
 end
 
-% Compute set D
+% Compute set D (feature vectors compared from different people)
 feature_vector_length = 30;
 number_of_samples = 1000;
 
