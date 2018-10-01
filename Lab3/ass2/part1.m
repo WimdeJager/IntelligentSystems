@@ -1,0 +1,13 @@
+load('normdist.mat')
+
+% Define 2D axes where y is very small to simulate a 1D graph
+hAxes = axes('NextPlot','add',...
+	     'DataAspectRatio',[1 1 1],...
+             'XLim',[0 70],...
+             'YLim',[0 eps],...
+             'Color','none');
+plot(S1,0,'bo','MarkerSize',10);
+plot(S2,0,'ro','MarkerSize',10);
+plot(T ,0,'ks','MarkerSize',10);
+
+xlabel('S1, S2 and T Values (No Units)');
