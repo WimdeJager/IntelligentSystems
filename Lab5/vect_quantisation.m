@@ -28,6 +28,7 @@ end
 distances = zeros(example_count - num_prototypes, num_prototypes);
 distance_count = 0;
 epoch_max = 1;
+step_size = 0.6
 for i = 1:epoch_max
 	rand_set1_idxs = randperm(example_count);
 	for j = 1:example_count
@@ -45,11 +46,9 @@ for i = 1:epoch_max
       [winner_dist, winner_idx] = min(distances(j,:));
       winner_x = prototypes(winner_idx, 1);
       winner_y = prototypes(winner_idx, 2);
-      
-      prototypes(winner_idx, 1) = (winner_x - example_x)/2;
-      prototypes(winner_idx, 2) = (winner_y - example_y)/2;
+      prototypes(winner_idx,1:2) = ...
+		new_prototype(step_size, winner_x, winner_y, example_x, example_y);
     end
   end
 end
-
 
