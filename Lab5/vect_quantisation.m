@@ -26,8 +26,8 @@ end
 % Begin epochs
 % distances has extra column for idxs used in computation
 data = x;
-data(prototypes(:,3), :) = [];
-f = figure('visible','on');
+data(prototypes(:,3), :) = []; % Delete prototype rows from data
+f = figure('visible','on'); % Plotting examples
 scatter(data(:,1), data(:,2), 'MarkerEdgeColor',[0 .5 .5],...
               'MarkerFaceColor',[0 .7 .7],...
               'LineWidth',1.5);
