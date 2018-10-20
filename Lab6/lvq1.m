@@ -1,20 +1,39 @@
 load('data_lvq.mat');
 
-[example_count, dimension]  = size(w5_1);
+data = data_lvq
+[example_count, dimension]  = size(data);
+class1 = data(1:example_count/2,:);
+class2 = data((example_count/2)+1 : example_count, :);
+class1_count = example_count/2;
+class2_count = class1_count;
 
-% Getting prototypes
-num_prototypes = 2; % Number of prototypes
-prototypes = zeros(num_prototypes,3); % 3rd columns records idx in dataset
-for i = 1:num_prototypes
-	r = randi(example_count);
+% Defining prototypes
+prototypes_per_class = 2; % Number of prototypes
+class1_prototypes = zeros(prototypes_per_class,3); % 3rd columns records idx in dataset
+class2_prototypes = zeros(prototypes_per_class,3); % 3rd columns records idx in dataset
+
+for i = 1:prototypes_per_class % Define class1 prototypes
+	r = randi(prototypes_per_class);
 	if i ~= 1
-		while ismember(r,prototypes(:,3)) ~= 0
-			r = randi(example_count);
+		while ismember(r,class1_prototypes(:,3)) ~= 0
+	    r = randi(prototypes_per_class);
 		end
 	end
-	prototypes(i,1) = w5_1(r,1);
-	prototypes(i,2) = w5_1(r,2);
-	prototypes(i,3) = r;
+	class1_prototypes(i,1) = class1(r,1);
+	class1_prototypes(i,2) = class1(r,2);
+	class1_prototypes(i,3) = r;
+end
+
+for i = 1:prototypes_per_class % Define class2 prototypes
+	r = randi(prototypes_per_class);
+	if i ~= 1
+		while ismember(r,class2_prototypes(:,3)) ~= 0
+	    r = randi(prototypes_per_class);
+		end
+	end
+	class2_prototypes(i,1) = class2(r,1);
+	class2_prototypes(i,2) = class2(r,2);
+	class2_prototypes(i,3) = r;
 end
 
 % Begin epochs
