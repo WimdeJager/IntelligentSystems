@@ -1,6 +1,6 @@
 load('data_lvq.mat');
 
-data = data_lvq
+data = w5_1;
 [example_count, dimension]  = size(data);
 class1 = data(1:example_count/2,:);
 class2 = data((example_count/2)+1 : example_count, :);
@@ -41,12 +41,9 @@ end
 close all;
 f = figure('visible','on'); % Plotting examples
 colors = zeros(100,3);
-colors(1:50)   = 0; colors(2:50)   = 0; colors(3:50)   = 1; % set first half to blue
-colors(50:100) = 1; colors(50:100) = 0; colors(50:100) = 0; % set second half to green
+colors(1:50,1)   = 0; colors(1:50,2)   = 0; colors(1:50,3)   = 1; % set first half to blue
+colors(50:100,1) = 1; colors(50:100,2) = 0; colors(50:100,3) = 0; % set second half to red
 scatter(w5_1(:,1), w5_1(:,2), 40, colors, 'filled');
-              %'MarkerEdgeColor',[0 0 1], ...
-              %'MarkerFaceColor',[0 0 1], ...
-              %'LineWidth',1.5);
 hold on
 
 distances = zeros(example_count, num_prototypes);
@@ -73,7 +70,7 @@ for i = 1:epoch_max
       winner_x = prototypes(winner_idx, 1);
       winner_y = prototypes(winner_idx, 2);
       prototypes(winner_idx,1:2) = ...
-        new_prototype(step_size, winner_x, winner_y, example_x, example_y);
+      new_prototype(step_size, winner_x, winner_y, example_x, example_y);
       sum = sum + winner_dist;
     end
   end
@@ -82,8 +79,7 @@ for i = 1:epoch_max
   if (1) 
     figure(1);
     new_pos = scatter(prototypes(:,1), prototypes(:,2), ...
-                'MarkerEdgeColor',[0 .5 .5], ...
-                'MarkerFaceColor',[1 0 0], ...
+                'MarkerFaceColor',[0 1 0], ...
                 'LineWidth',1.5);
     filename = sprintf('%s_%d','epochs',i);
     saveas(f, filename, 'png');

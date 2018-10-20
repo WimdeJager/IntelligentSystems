@@ -1,10 +1,6 @@
-load('w6_1x.mat');
-load('w6_1y.mat');
-load('w6_1z.mat');
+load('data_lvq.mat');
 
-% 3 datasets of 2-dimensional points
-data = w6_1x;
-[example_count, dimension]  = size(data);
+[example_count, dimension]  = size(w5_1);
 
 % Getting prototypes
 num_prototypes = 2; % Number of prototypes
@@ -16,8 +12,8 @@ for i = 1:num_prototypes
 			r = randi(example_count);
 		end
 	end
-	prototypes(i,1) = data(r,1);
-	prototypes(i,2) = data(r,2);
+	prototypes(i,1) = w5_1(r,1);
+	prototypes(i,2) = w5_1(r,2);
 	prototypes(i,3) = r;
 end
 
@@ -25,23 +21,28 @@ end
 % distances has extra column for idxs used in computation
 close all;
 f = figure('visible','on'); % Plotting examples
-scatter(data(:,1), data(:,2), 'MarkerEdgeColor',[0 .5 .5],...
-              'MarkerFaceColor',[0 .7 .7],...
+scatter(w5_1(1:50,1), w5_1(1:50,2), ...
+              'MarkerEdgeColor',[0 .5 .5], ...
+              'MarkerFaceColor',[0 .7 .7], ...
+              'LineWidth',1.5);
+scatter(w5_1(50:100,1), w5_1(50:100,2), ...
+              'MarkerEdgeColor',[0 .2 .2], ...
+              'MarkerFaceColor',[0 .4 .4], ...
               'LineWidth',1.5);
 hold on
 
 distances = zeros(example_count, num_prototypes);
 distance_count = 0;
-epoch_max = 250;
-step_size = 0.1;
+epoch_max = 10;
+step_size = 0.002;
 quant_error = zeros(1,epoch_max);
 sum = 0;
 for i = 1:epoch_max
 	rand_set1_idxs = randperm(example_count);
 	for j = 1:example_count
 		if ismember(j,prototypes(:,3)) == 0 % example is not prototype
-			example_x = data(rand_set1_idxs(j),1);
-			example_y = data(rand_set1_idxs(j),2);
+			example_x = w5_1(rand_set1_idxs(j),1);
+			example_y = w5_1(rand_set1_idxs(j),2);
 			for k = 1:num_prototypes
 				prototype_x = prototypes(k,1);
 				prototype_y = prototypes(k,2);
