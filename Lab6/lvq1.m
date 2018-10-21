@@ -55,10 +55,10 @@ scatter(class2(:,1), class2(:,2), 'MarkerEdgeColor',[0 0 0], ...
 distances_to_prototypes = zeros(example_count, prototype_count);
 epoch_max = 10;
 step_size = 0.002;
-quant_error = zeros(1,epoch_max);
-sum = 0;
+training_error = zeros(1,epoch_max);
 for i = 1:epoch_max
     rand_example_idxs = randperm(example_count);
+    training_error_sum = 0;
     
     for j = 1:example_count
         if ismember(j,prototypes(:,3)) == 0 % example is not prototype
@@ -81,6 +81,7 @@ for i = 1:epoch_max
                 prototypes(winner_idx,1:2) = ...
                     new_prototype(step_size, winner_x, winner_y, example_x, example_y);
             else % different class so reflect example point over protoype then move
+                training_error_sum = training_error_sum + 1;
                 if example_x > winner_x
                     example_x = winner_x - x_diff;
                 else
@@ -94,7 +95,6 @@ for i = 1:epoch_max
                 end
                 prototypes(winner_idx,1:2) = ...
                     new_prototype(step_size, winner_x, winner_y, example_x, example_y);
-                sum = sum + winner_dist;
             end
         end
     end
@@ -125,16 +125,15 @@ for i = 1:epoch_max
     delete(class2_prototypes);
     
     % Collect quantization error
-    quant_error(i) = sum;
-    sum = 0;
+    training_error(i) = training_error_sum;
 end
 
 % Plot quantization error
-f2 = figure('visible','on'); % Plotting examples
+f2 = figure('visible','on');
 hold on
-plot(quant_error);
-title('Quantization error for epochs');
-xlabel('Epoch number');
-ylabel('Quantization error (H_{VQ})');
-filename = sprintf('%s_K=%d_tmax=%d', 'HVQ', prototype_count, epoch_max);
+plot(training_error);
+title('Training Error');
+xlabel('Epoch');
+ylabel('Misclassifications (%)');
+filename = sprintf('%s_K=%d_tmax=%d', 'LVQ`_training_error', prototype_count, epoch_max);
 saveas(f2, filename, 'png');
