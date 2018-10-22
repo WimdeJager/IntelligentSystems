@@ -1,3 +1,4 @@
+clear; % empty workspace
 load('data_lvq.mat');
 
 % Defining some names
@@ -11,6 +12,40 @@ class2 = data((example_count/2)+1 : example_count, :);
 prototype_count = 2;
 prototypes = zeros(prototype_count,4);
 
+%
+mean_class1_x = mean(data(1:50,  1));
+mean_class1_y = mean(data(1:50,  2));
+mean_class2_x = mean(data(50:100,1));
+mean_class2_y = mean(data(50:100,2));
+min_dist = 10; % infinity
+idx = 1;
+
+for i = 1:50
+  x_diff = abs(mean_class1_x - data(i,1));
+  y_diff = abs(mean_class1_y - data(i,2));
+  euclidian_dist = sqrt(x_diff^2 + y_diff^2);
+  if (euclidian_dist < min_dist) 
+    min_dist = euclidian_dist;
+    idx = i;
+  end
+end
+
+prototypes(1,:) = [data(idx,:) idx 1];
+
+for i = 50:100
+  x_diff = abs(mean_class2_x - data(i,1));
+  y_diff = abs(mean_class2_y - data(i,2));
+  euclidian_dist = sqrt(x_diff^2 + y_diff^2);
+  if (euclidian_dist < min_dist) 
+    min_dist = euclidian_dist;
+    idx = i;
+  end
+end
+
+prototypes(2,:) = [data(idx,:) idx 2];
+%}
+
+%{
 for i = 1:prototype_count
     if i <= prototype_count/2
         r = randi(example_count/2);
@@ -35,6 +70,7 @@ for i = 1:prototype_count
         prototypes(i,4) = 2 ;
     end
 end
+%}
 
 % Remove prototypes from class variables so we don't plot the prototypes
 % 2 times
