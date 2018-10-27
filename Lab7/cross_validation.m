@@ -44,15 +44,18 @@ for p = 1:5
     test_errors(i) = test_error;
   end
   % compute averages and standard deviations
-  training_avg(i) = mean(training_errors);
-  training_stddev(i) = std(training_errors);
-  test_avg(i) = mean(test_errors);
-  test_stddev(i) = std(test_errors);
+  training_avg(p) = mean(training_errors);
+  training_stddev(p) = std(training_errors);
+  test_avg(p) = mean(test_errors);
+  test_stddev(p) = std(test_errors);
 end
 
 figure(1);
 errorbar(training_avg, training_stddev);
+xticks([1 2 3 4 5])
+xticklabels({'1', '2', '3', '4', '5'})
 
 figure(2);
 errorbar(test_avg, test_stddev);
-
+xticks([1 2 3 4 5])
+xticklabels({'1', '2', '3', '4', '5'})
