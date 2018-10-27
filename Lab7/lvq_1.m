@@ -70,7 +70,7 @@ for i = 1:epoch_max
         prototypes(winner_idx,1:2) = ...
         new_prototype(step_size, winner_x, winner_y, example_x, example_y);
       else % different class so reflect example point over protoype then move
-        if (j == epoch_max)
+        if (i == epoch_max)
           training_error = training_error + 1;
         end
         if example_x > winner_x
