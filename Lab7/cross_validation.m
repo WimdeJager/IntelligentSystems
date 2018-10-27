@@ -33,7 +33,7 @@ for i = 1:5
   D_train(D_idxs(:), :) = []; % D_i_train = D / D_i
   D_test = data(D_idxs,:);
   
-  [prototypes, training_error] = lvq_1(D_train, D_test, prototype_count, step_size, epoch_max);
+  [prototypes, training_error, test_error] = lvq_1(D_train, D_test, prototype_count, step_size, epoch_max);
 end
 
 % 4. Perfrom LVQ-1 on D_i_train. The trained prototypes are then tested

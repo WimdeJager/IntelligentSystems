@@ -4,7 +4,7 @@ function [prototypes, training_error, test_error] = lvq_1(training_set, test_set
 class1_bools = training_set(:,3) == 1;
 class2_bools = training_set(:,3) == 2;
 class1 = training_set(class1_bools, :);
-class2 = training_set(class2_bools);
+class2 = training_set(class2_bools, :);
 [class1_size, ~] = size(class1);
 [class2_size, ~] = size(class2);
 
