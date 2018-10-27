@@ -52,10 +52,18 @@ end
 
 figure(1);
 errorbar(training_avg, training_stddev);
-xticks([1 2 3 4 5])
-xticklabels({'1', '2', '3', '4', '5'})
+xticks([1 2 3 4 5]);
+xticklabels({'1', '2', '3', '4', '5'});
+title('Training Error');
+xlabel('Number of Prototypes (K)');
+ylabel('Average Training Error Accross 5 Folds');
+legend('Standard Deviations Between 5 Folds');
 
 figure(2);
 errorbar(test_avg, test_stddev);
-xticks([1 2 3 4 5])
-xticklabels({'1', '2', '3', '4', '5'})
+xticks([1 2 3 4 5]);
+xticklabels({'1', '2', '3', '4', '5'});
+title('Test Error');
+xlabel('Number of Prototypes (K)');
+ylabel('Average Test Error Accross 5 Folds');
+legend('Standard Deviations Between 5 Folds');
