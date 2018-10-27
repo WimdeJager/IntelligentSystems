@@ -1,4 +1,4 @@
-function prototypes = lvq_1(training_set, prototype_count, step_size, epoch_max)
+function [prototypes, training_error, test_error] = lvq_1(training_set, test_set, prototype_count, step_size, epoch_max)
 % Defining some names
 [example_count, ~] = size(training_set);
 class1_bools = training_set(:,3) == 1;
@@ -45,11 +45,9 @@ class2(prototypes((prototype_count/2)+1:prototype_count,3)-class1_size,:) = [];
 
 % Begin epochs
 distances_to_prototypes = zeros(example_count, prototype_count);
-step_size = 0.002;
-training_error = zeros(1,epoch_max);
 for i = 1:epoch_max
 	rand_example_idxs = randperm(example_count);
-	training_error_sum = 0;
+  training_error = 0;
 	
 	for j = 1:example_count
     if ismember(j,prototypes(:,3)) == 0 % example is not prototype
@@ -72,7 +70,9 @@ for i = 1:epoch_max
         prototypes(winner_idx,1:2) = ...
         new_prototype(step_size, winner_x, winner_y, example_x, example_y);
       else % different class so reflect example point over protoype then move
-        training_error_sum = training_error_sum + 1;
+        if (j == epoch_max)
+          training_error = training_error + 1;
+        end
         if example_x > winner_x
           example_x = winner_x - x_diff;
         else
@@ -89,6 +89,6 @@ for i = 1:epoch_max
       end
     end
   end
-    
-	training_error(i) = training_error_sum;
+  
+  test_error = test_prototypes(test_set, prototypes);
 end

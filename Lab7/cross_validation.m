@@ -21,6 +21,9 @@ data(51:100,3) = 2;
 % Setting values
 epoch_max = 100;
 step_size = 0.002;
+prototypes = zeros(prototype_count,4);
+training_error = zeros(1,epoch_max);
+test_error = zeros(1,epoch_max);
 
 for i = 1:5
   i_start = 20*(i-1) + 1;
@@ -30,7 +33,7 @@ for i = 1:5
   D_train(D_idxs(:), :) = []; % D_i_train = D / D_i
   D_test = data(D_idxs,:);
   
-  lvq_1(D_train, prototype_count, step_size, epoch_max);
+  [prototypes, training_error] = lvq_1(D_train, D_test, prototype_count, step_size, epoch_max);
 end
 
 % 4. Perfrom LVQ-1 on D_i_train. The trained prototypes are then tested
