@@ -17,7 +17,7 @@ data(51:100,3) = 2;
 epoch_max = 100;
 step_size = 0.002;
 folds = 5;
-prototype_count = 0;
+prototypes = 0;
 training_errors = zeros(1,folds);
 test_errors = zeros(1,folds);
 training_avg = zeros(1,5);
@@ -49,3 +49,10 @@ for p = 1:5
   test_avg(i) = mean(test_errors);
   test_stddev(i) = std(test_errors);
 end
+
+figure(1);
+errorbar(training_avg, training_stddev);
+
+figure(2);
+errorbar(test_avg, test_stddev);
+
