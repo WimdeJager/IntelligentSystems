@@ -40,8 +40,8 @@ end
 
 % Remove prototypes from class variables so we don't plot the prototypes
 % 2 times
-class1(prototypes(1:prototype_count/2,3),:) = [];
-class2(prototypes((prototype_count/2)+1:prototype_count,3)-class1_size,:) = [];
+class1(prototypes(1:(prototype_count/2),3),:) = [];
+class2(prototypes((prototype_count/2)+1:(prototype_count/2),3)-class1_size,:) = [];
 
 % Begin epochs
 distances_to_prototypes = zeros(example_count, prototype_count);

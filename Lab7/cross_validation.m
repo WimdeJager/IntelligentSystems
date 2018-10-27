@@ -17,7 +17,7 @@ data(51:100,3) = 2;
 epoch_max = 100;
 step_size = 0.002;
 folds = 5;
-prototypes = zeros(prototype_count,4);
+prototype_count = 0;
 training_errors = zeros(1,folds);
 test_errors = zeros(1,folds);
 training_avg = zeros(1,5);
@@ -39,7 +39,7 @@ for p = 1:5
     D_test = data(D_idxs,:);
 
     [prototypes, training_error, test_error] = ... 
-      lvq_1(D_train, D_test, prototype_count, step_size, epoch_max);
+      lvq_1(D_train, D_test, prototype_count*2, step_size, epoch_max);
     training_errors(i) = training_error;
     test_errors(i) = test_error;
   end
