@@ -4,7 +4,7 @@ function [prototypes, training_error, test_error] = lvq_1(training_set, test_set
 class1_bools = training_set(:,3) == 1;
 class2_bools = training_set(:,3) == 2;
 class1 = training_set(class1_bools, :);
-class2 = training_set(class2_bools);
+class2 = training_set(class2_bools, :);
 [class1_size, ~] = size(class1);
 [class2_size, ~] = size(class2);
 
@@ -40,8 +40,8 @@ end
 
 % Remove prototypes from class variables so we don't plot the prototypes
 % 2 times
-class1(prototypes(1:prototype_count/2,3),:) = [];
-class2(prototypes((prototype_count/2)+1:prototype_count,3)-class1_size,:) = [];
+class1(prototypes(1:(prototype_count/2),3),:) = [];
+class2(prototypes((prototype_count/2)+1:(prototype_count/2),3)-class1_size,:) = [];
 
 % Begin epochs
 distances_to_prototypes = zeros(example_count, prototype_count);
@@ -70,7 +70,7 @@ for i = 1:epoch_max
         prototypes(winner_idx,1:2) = ...
         new_prototype(step_size, winner_x, winner_y, example_x, example_y);
       else % different class so reflect example point over protoype then move
-        if (j == epoch_max)
+        if (i == epoch_max)
           training_error = training_error + 1;
         end
         if example_x > winner_x
