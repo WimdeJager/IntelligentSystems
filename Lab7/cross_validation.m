@@ -18,6 +18,8 @@ epoch_max = 100;
 step_size = 0.002;
 folds = 5;
 prototypes = 0;
+
+% initializing arrays
 training_errors = zeros(1,folds);
 test_errors = zeros(1,folds);
 training_avg = zeros(1,5);
